@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Simulator</title>
+    <title>Clicker Simulator with DVD Upgrade</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,34 +52,18 @@
             margin-top: 10px;
         }
 
-        /* Leaderboard and Stats */
-        #leaderboard {
+        /* Menus */
+        #upgradesContainer, #autoClicker, #leaderboard, #regionContainer {
             display: none;
             margin-top: 20px;
-            padding: 10px;
-            background-color: #2196F3;
-            color: white;
-            border-radius: 5px;
         }
 
-        /* Auto Clicker Section */
-        #autoClicker {
-            display: none;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #ff9800;
-            color: white;
-            border-radius: 5px;
-        }
-
-        /* Credits Section */
         #credits {
             margin-top: 20px;
             font-size: 14px;
             color: #555;
         }
 
-        /* DVD Style Animation */
         #dvdLogo {
             margin-top: 20px;
             width: 50px;
@@ -99,27 +83,13 @@
             100% { top: 10%; left: 10%; }
         }
 
-        /* Scrolling Pixel Art Background */
-        .scrolling-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://www.piskelapp.com/static/img/piskel-splash-screen.png');
-            background-repeat: repeat-x;
-            animation: scrollBackground 10s linear infinite;
+        #dvdLogoFast {
+            animation-duration: 1.5s; /* Faster animation speed */
         }
 
-        @keyframes scrollBackground {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
     </style>
 </head>
 <body>
-    <div class="scrolling-background"></div>
-
     <div class="container">
         <button class="click-button" id="clickButton">Click Me!</button>
         <div class="clicks-counter" id="clicksCounter">Clicks: 0</div>
@@ -134,6 +104,7 @@
             <button class="upgrade-button" onclick="buyUpgrade(50)">Upgrade 2: Cost 50 Clicks</button>
             <button class="upgrade-button" onclick="buyUpgrade(100)">Upgrade 3: Cost 100 Clicks</button>
             <button class="upgrade-button" onclick="buyFasterAutoClick()">Faster Auto Clicker: Cost 500 Clicks</button>
+            <button class="upgrade-button" onclick="buyDVDUpgrade()">DVD Speed Upgrade: Cost 200 Clicks</button>
         </div>
 
         <button class="rebirth-button" id="rebirthBtn" onclick="rebirthGame()">Rebirth</button>
@@ -147,6 +118,10 @@
         <button class="upgrade-button" id="leaderboardBtn" onclick="toggleLeaderboard()">Leaderboard Stats</button>
         <div id="leaderboard">
             <p>Leaderboard Coming Soon...</p>
+        </div>
+
+        <div id="regionContainer">
+            <p>Your Region: <span id="userRegion">Loading...</span></p>
         </div>
 
         <div id="credits">
@@ -168,7 +143,9 @@
         const upgradesContainer = document.getElementById('upgradesContainer');
         const autoClicker = document.getElementById('autoClicker');
         const leaderboard = document.getElementById('leaderboard');
+        const regionContainer = document.getElementById('regionContainer');
         const dvdLogo = document.getElementById('dvdLogo');
+        const dvdLogoFast = document.getElementById('dvdLogoFast');
 
         // Button to trigger clicking
         clickButton.onclick = () => {
@@ -213,19 +190,14 @@
             }
         }
 
-        // Toggle auto-clicker
-        function toggleAutoClicker() {
-            if (autoClickInterval) {
-                clearInterval(autoClickInterval);
-                autoClickInterval = null;
-                autoClicker.style.display = 'none';
+        // New DVD Speed Upgrade
+        function buyDVDUpgrade() {
+            if (clicks >= 200) {
+                clicks -= 200;
+                dvdLogo.classList.add('fast'); // Apply the faster animation class
+                saveData();
             } else {
-                autoClickInterval = setInterval(() => {
-                    clicks += clickValue;
-                    clicksCounter.textContent = `Clicks: ${clicks}`;
-                    saveData();
-                }, autoClickSpeed);
-                autoClicker.style.display = 'block';
+                alert('Not enough clicks for the DVD speed upgrade!');
             }
         }
 
@@ -300,7 +272,16 @@
             }
         }
 
+        // Load user region
+        function loadUserRegion() {
+            // Simulating region loading (this could be replaced with actual API requests in a real application)
+            const region = 'USA';  // Placeholder for actual region detection logic
+            document.getElementById('userRegion').textContent = region;
+            regionContainer.style.display = 'block';
+        }
+
         loadData();
+        loadUserRegion();
     </script>
 </body>
 </html>
