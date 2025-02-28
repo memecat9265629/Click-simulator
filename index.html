@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        #clickButton {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #clickButton:active {
+            background-color: #45a049;
+        }
+
+        #clicksCounter {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .upgradeButton {
+            background-color: #2196F3;
+            color: white;
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .upgradeButton:active {
+            background-color: #1976D2;
+        }
+
+        #upgradesContainer {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .cost {
+            color: #ff5722;
+            font-weight: bold;
+        }
+
+        .clickPer {
+            margin-top: 10px;
+        }
+
+        #credits {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="clickButton">Click Me!</button>
+        <div id="clicksCounter">Clicks: 0</div>
+
+        <div class="clickPer">
+            <p>Clicks per click: <span id="clickPer">1</span></p>
+        </div>
+
+        <button class="upgradeButton" id="upgradeBtn" onclick="toggleUpgrades()">Upgrades</button>
+
+        <div id="upgradesContainer">
+            <button class="upgradeButton" onclick="buyUpgrade(10)">Upgrade 1: Cost 10 Clicks</button>
+            <button class="upgradeButton" onclick="buyUpgrade(50)">Upgrade 2: Cost 50 Clicks</button>
+            <button class="upgradeButton" onclick="buyUpgrade(100)">Upgrade 3: Cost 100 Clicks</button>
+        </div>
+    </div>
+
+    <div id="credits">
+        <p>Credits: Developed by <strong>Neal.Fun</strong></p>
+    </div>
+
+    <script>
+        let clicks = 0;
+        let clickValue = 1;
+        const clickButton = document.getElementById('clickButton');
+        const clicksCounter = document.getElementById('clicksCounter');
+        const clickPer = document.getElementById('clickPer');
+        const upgradeBtn = document.getElementById('upgradeBtn');
+        const upgradesContainer = document.getElementById('upgradesContainer');
+
+        clickButton.onclick = () => {
+            clicks += clickValue;
+            clicksCounter.textContent = `Clicks: ${clicks}`;
+            saveData();
+        };
+
+        function toggleUpgrades() {
+            if (upgradesContainer.style.display === 'none') {
+                upgradesContainer.style.display = 'block';
+            } else {
+                upgradesContainer.style.display = 'none';
+            }
+        }
+
+        function buyUpgrade(cost) {
+            if (clicks >= cost) {
+                clicks -= cost;
+                clickValue += 1; // Increase click value per upgrade
+                clicksCounter.textContent = `Clicks: ${clicks}`;
+                clickPer.textContent = clickValue;
+                saveData();
+            } else {
+                alert('Not enough clicks!');
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('clicks', clicks);
+            localStorage.setItem('clickValue', clickValue);
+        }
+
+        function loadData() {
+            const savedClicks = localStorage.getItem('clicks');
+            const savedClickValue = localStorage.getItem('clickValue');
+            
+            if (savedClicks) {
+                clicks = parseInt(savedClicks);
+                clicksCounter.textContent = `Clicks: ${clicks}`;
+            }
+
+            if (savedClickValue) {
+                clickValue = parseInt(savedClickValue);
+                clickPer.textContent = clickValue;
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
