@@ -3,285 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Simulator with DVD Upgrade</title>
+    <title>EonHub</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #e0e0e0;
-            overflow-x: hidden;
-        }
-
-        .container {
-            text-align: center;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 320px;
-            z-index: 2;
-        }
-
-        .click-button, .upgrade-button, .rebirth-button, .data-button {
-            background-color: #4CAF50;
+            background-color: black;
             color: white;
-            font-size: 18px;
-            padding: 10px 20px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #search {
+            width: 100%;
+            padding: 10px;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
-
-        .click-button:active, .upgrade-button:active, .rebirth-button:active, .data-button:active {
-            background-color: #45a049;
+        .app-list {
+            list-style-type: none;
+            padding: 0;
         }
-
-        .clicks-counter {
-            font-size: 24px;
-            margin-top: 20px;
+        .app-item {
+            background: #333;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
         }
-
-        .click-per {
-            margin-top: 10px;
+        .app-name {
+            font-weight: bold;
         }
-
-        /* Menus */
-        #upgradesContainer, #autoClicker, #leaderboard, #regionContainer {
-            display: none;
-            margin-top: 20px;
+        .app-dev, .app-ver {
+            color: #ccc;
         }
-
-        #credits {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        #dvdLogo {
-            margin-top: 20px;
-            width: 50px;
-            height: 50px;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/DVD_logo.svg/512px-DVD_logo.svg.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            position: absolute;
-            animation: dvdAnimation 3s linear infinite;
-        }
-
-        @keyframes dvdAnimation {
-            0% { top: 10%; left: 10%; }
-            25% { top: 10%; left: 90%; }
-            50% { top: 90%; left: 90%; }
-            75% { top: 90%; left: 10%; }
-            100% { top: 10%; left: 10%; }
-        }
-
-        #dvdLogoFast {
-            animation-duration: 1.5s; /* Faster animation speed */
-        }
-
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="click-button" id="clickButton">Click Me!</button>
-        <div class="clicks-counter" id="clicksCounter">Clicks: 0</div>
 
-        <div class="click-per">
-            <p>Clicks per click: <span id="clickPer">1</span></p>
-        </div>
-
-        <button class="upgrade-button" id="upgradeBtn" onclick="toggleUpgrades()">Upgrades</button>
-        <div id="upgradesContainer">
-            <button class="upgrade-button" onclick="buyUpgrade(10)">Upgrade 1: Cost 10 Clicks</button>
-            <button class="upgrade-button" onclick="buyUpgrade(50)">Upgrade 2: Cost 50 Clicks</button>
-            <button class="upgrade-button" onclick="buyUpgrade(100)">Upgrade 3: Cost 100 Clicks</button>
-            <button class="upgrade-button" onclick="buyFasterAutoClick()">Faster Auto Clicker: Cost 500 Clicks</button>
-            <button class="upgrade-button" onclick="buyDVDUpgrade()">DVD Speed Upgrade: Cost 200 Clicks</button>
-        </div>
-
-        <button class="rebirth-button" id="rebirthBtn" onclick="rebirthGame()">Rebirth</button>
-
-        <button class="data-button" id="saveDataBtn" onclick="saveData()">Save Data</button>
-        <button class="data-button" id="deleteDataBtn" onclick="deleteData()">Delete Data</button>
-
-        <button class="upgrade-button" id="autoClickerBtn" onclick="toggleAutoClicker()">Auto Clicker</button>
-        <div id="autoClicker">Auto Clicker Active</div>
-
-        <button class="upgrade-button" id="leaderboardBtn" onclick="toggleLeaderboard()">Leaderboard Stats</button>
-        <div id="leaderboard">
-            <p>Leaderboard Coming Soon...</p>
-        </div>
-
-        <div id="regionContainer">
-            <p>Your Region: <span id="userRegion">Loading...</span></p>
-        </div>
-
-        <div id="credits">
-            <p>Credits: Developed by <strong>Neal.Fun</strong></p>
-        </div>
-
-        <div id="dvdLogo"></div>
-    </div>
+    <h1>EonHub <span id="date"></span></h1>
+    <input type="text" id="search" placeholder="Search apps..." onkeyup="filterApps()">
+    <ul class="app-list" id="appList">
+        <li class="app-item">
+            <div class="app-name">Screen Grab</div>
+            <div class="app-dev">dev (Screen Grab) Team</div>
+            <div class="app-ver">ver 1.0</div>
+        </li>
+        <li class="app-item">
+            <div class="app-name">#Free Fire⭐ffịpa</div>
+            <div class="app-dev">dev GARENA INTERNATIONAL I PRIVATE L...</div>
+            <div class="app-ver">ver 1.105.1</div>
+        </li>
+        <li class="app-item">
+            <div class="app-name">1945 Air Force</div>
+            <div class="app-dev">dev ONESOFT GLOBAL PTE. LTD.</div>
+            <div class="app-ver">ver 11.58</div>
+        </li>
+        <li class="app-item">
+            <div class="app-name">1998 Cam</div>
+            <div class="app-dev">dev Huu Nguyen Chi</div>
+            <div class="app-ver">ver 1.9.3</div>
+        </li>
+        <li class="app-item">
+            <div class="app-name">365Scores</div>
+            <div class="app-dev">dev 365Scores</div>
+            <div class="app-ver">ver 5.8.18</div>
+        </li>
+        <li class="app-item">
+            <div class="app-name">3D Outdoor CFire</div>
+            <div class="app-dev">dev Anuman</div>
+            <div class="app-ver">ver 4.5.5</div>
+        </li>
+    </ul>
 
     <script>
-        let clicks = 0;
-        let clickValue = 1;
-        let autoClickInterval = null;
-        let autoClickSpeed = 1000; // Default speed of auto-clicker
-        const clickButton = document.getElementById('clickButton');
-        const clicksCounter = document.getElementById('clicksCounter');
-        const clickPer = document.getElementById('clickPer');
-        const upgradeBtn = document.getElementById('upgradeBtn');
-        const upgradesContainer = document.getElementById('upgradesContainer');
-        const autoClicker = document.getElementById('autoClicker');
-        const leaderboard = document.getElementById('leaderboard');
-        const regionContainer = document.getElementById('regionContainer');
-        const dvdLogo = document.getElementById('dvdLogo');
-        const dvdLogoFast = document.getElementById('dvdLogoFast');
+        function filterApps() {
+            const searchInput = document.getElementById('search').value.toLowerCase();
+            const appItems = document.querySelectorAll('.app-item');
 
-        // Button to trigger clicking
-        clickButton.onclick = () => {
-            clicks += clickValue;
-            clicksCounter.textContent = `Clicks: ${clicks}`;
-            saveData();
-        };
-
-        // Toggles the upgrade menu
-        function toggleUpgrades() {
-            upgradesContainer.style.display = (upgradesContainer.style.display === 'none') ? 'block' : 'none';
+            appItems.forEach(item => {
+                const appName = item.querySelector('.app-name').textContent.toLowerCase();
+                item.style.display = appName.includes(searchInput) ? '' : 'none';
+            });
         }
 
-        // Handle buying an upgrade
-        function buyUpgrade(cost) {
-            if (clicks >= cost) {
-                clicks -= cost;
-                clickValue += 1;
-                clicksCounter.textContent = `Clicks: ${clicks}`;
-                clickPer.textContent = clickValue;
-                saveData();
-            } else {
-                alert('Not enough clicks!');
-            }
-        }
-
-        // Handle buying faster auto-clicker
-        function buyFasterAutoClick() {
-            if (clicks >= 500) {
-                clicks -= 500;
-                autoClickSpeed = 500; // Faster speed for auto-clicker
-                clearInterval(autoClickInterval); // Reset previous interval
-                autoClickInterval = setInterval(() => {
-                    clicks += clickValue;
-                    clicksCounter.textContent = `Clicks: ${clicks}`;
-                    saveData();
-                }, autoClickSpeed);
-                autoClicker.style.display = 'block';
-                saveData();
-            } else {
-                alert('Not enough clicks for this upgrade!');
-            }
-        }
-
-        // New DVD Speed Upgrade
-        function buyDVDUpgrade() {
-            if (clicks >= 200) {
-                clicks -= 200;
-                dvdLogo.classList.add('fast'); // Apply the faster animation class
-                saveData();
-            } else {
-                alert('Not enough clicks for the DVD speed upgrade!');
-            }
-        }
-
-        // Rebirth the game and provide rewards
-        function rebirthGame() {
-            clicks = 0;
-            clickValue = 1;
-            autoClickSpeed = 1000;
-            clearInterval(autoClickInterval);
-            autoClickInterval = null;
-            clicksCounter.textContent = `Clicks: ${clicks}`;
-            clickPer.textContent = clickValue;
-            autoClicker.style.display = 'none';
-            alert("Rebirth complete! Starting fresh with a bonus.");
-            saveData();
-        }
-
-        // Save data in localStorage
-        function saveData() {
-            localStorage.setItem('clicks', clicks);
-            localStorage.setItem('clickValue', clickValue);
-            localStorage.setItem('autoClickSpeed', autoClickSpeed);
-        }
-
-        // Delete saved data
-        function deleteData() {
-            localStorage.removeItem('clicks');
-            localStorage.removeItem('clickValue');
-            localStorage.removeItem('autoClickSpeed');
-            clicks = 0;
-            clickValue = 1;
-            autoClickSpeed = 1000;
-            clicksCounter.textContent = `Clicks: ${clicks}`;
-            clickPer.textContent = clickValue;
-            clearInterval(autoClickInterval);
-            autoClickInterval = null;
-            autoClicker.style.display = 'none';
-            alert("All data has been deleted.");
-        }
-
-        // Toggle leaderboard visibility
-        function toggleLeaderboard() {
-            leaderboard.style.display = (leaderboard.style.display === 'none') ? 'block' : 'none';
-        }
-
-        // Load data from localStorage
-        function loadData() {
-            const savedClicks = localStorage.getItem('clicks');
-            const savedClickValue = localStorage.getItem('clickValue');
-            const savedAutoClickSpeed = localStorage.getItem('autoClickSpeed');
-            
-            if (savedClicks) {
-                clicks = parseInt(savedClicks);
-                clicksCounter.textContent = `Clicks: ${clicks}`;
-            }
-
-            if (savedClickValue) {
-                clickValue = parseInt(savedClickValue);
-                clickPer.textContent = clickValue;
-            }
-
-            if (savedAutoClickSpeed) {
-                autoClickSpeed = parseInt(savedAutoClickSpeed);
-                if (autoClickSpeed < 1000) {
-                    autoClickInterval = setInterval(() => {
-                        clicks += clickValue;
-                        clicksCounter.textContent = `Clicks: ${clicks}`;
-                        saveData();
-                    }, autoClickSpeed);
-                    autoClicker.style.display = 'block';
-                }
-            }
-        }
-
-        // Load user region
-        function loadUserRegion() {
-            // Simulating region loading (this could be replaced with actual API requests in a real application)
-            const region = 'USA';  // Placeholder for actual region detection logic
-            document.getElementById('userRegion').textContent = region;
-            regionContainer.style.display = 'block';
-        }
-
-        loadData();
-        loadUserRegion();
+        // Display current date
+        document.getElementById("date").innerText = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
     </script>
+
 </body>
 </html>
