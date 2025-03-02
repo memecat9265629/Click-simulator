@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body class="bg-gray-900 text-white h-screen flex flex-col justify-between">
+<body class="bg-gray-900 text-white h-screen flex flex-col">
 
     <!-- Header -->
     <div class="flex items-center justify-between p-4 bg-gray-800">
@@ -22,13 +22,13 @@
         <i class="fas fa-edit text-xl"></i>
     </div>
 
-    <!-- Main Chat Window -->
+    <!-- Chat Window -->
     <div id="chatWindow" class="flex-grow p-4 overflow-y-auto space-y-4">
         <div class="text-center text-gray-400">What can I help with?</div>
     </div>
 
     <!-- Footer -->
-    <div class="p-4 bg-gray-800 flex items-center space-x-2">
+    <div id="chatFooter" class="p-4 bg-gray-800 flex items-center space-x-2">
         <i class="fas fa-plus-circle text-2xl"></i>
         <input id="userInput" type="text" placeholder="Ask anything" class="flex-grow bg-gray-700 text-white placeholder-gray-400 px-3 py-2 rounded focus:outline-none">
         <i id="sendButton" class="fas fa-paper-plane text-2xl cursor-pointer"></i>
@@ -42,6 +42,17 @@
             if (event.key === "Enter") sendMessage();
         });
 
+        // Auto-scroll when a new message appears
+        function autoScroll() {
+            const chatWindow = document.getElementById("chatWindow");
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // Auto-scroll when focusing on the input field
+        document.getElementById("userInput").addEventListener("focus", function() {
+            setTimeout(() => autoScroll(), 200);
+        });
+
         function sendMessage() {
             const inputField = document.getElementById("userInput");
             const chatWindow = document.getElementById("chatWindow");
@@ -53,15 +64,17 @@
             // Display user message
             chatWindow.innerHTML += `<div class="text-right text-blue-400">You: ${userMessage}</div>`;
             inputField.value = "";
+            autoScroll(); // Scroll after user sends message
 
             // Call OpenAI API
             fetchAIResponse(userMessage, selectedModel)
                 .then(response => {
                     chatWindow.innerHTML += `<div class="text-left text-green-400">AI: ${response}</div>`;
-                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                    autoScroll(); // Scroll after AI response
                 })
                 .catch(error => {
                     chatWindow.innerHTML += `<div class="text-left text-red-400">Error: ${error.message}</div>`;
+                    autoScroll();
                 });
         }
 
