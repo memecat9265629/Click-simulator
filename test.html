@@ -3,168 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>ChatGPT - Roblox AI Assistant</title>
 </head>
-<body class="bg-gray-900 text-white h-screen flex flex-col justify-between transition duration-300" id="app">
+<body class="bg-gray-900 text-white h-screen flex flex-col justify-between">
 
-    <!-- Navbar -->
+    <!-- Header -->
     <div class="flex items-center justify-between p-4 bg-gray-800">
-        <div class="flex space-x-4">
-            <button id="chat-tab" class="text-white px-4 py-2 bg-blue-600 rounded">Chat</button>
-            <button id="image-tab" class="text-white px-4 py-2 bg-gray-600 rounded">Upload Image</button>
-        </div>
-        
-        <!-- Model Selection, Theme Toggle & Clear Chat -->
-        <div class="flex items-center space-x-4">
-            <select id="model-select" class="bg-gray-700 text-white p-2 rounded">
-                <option value="gpt-3.5-turbo" selected>GPT-3.5 Turbo</option>
+        <i class="fas fa-bars text-xl"></i>
+        <div class="flex items-center space-x-2">
+            <span>ChatGPT</span>
+            <select id="modelSelect" class="bg-gray-700 text-white px-2 py-1 rounded">
                 <option value="gpt-4">GPT-4</option>
-                <option value="deepseek">DeepSeek</option>
-                <option value="roblox-studio-ai">Roblox Studio AI</option>
+                <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
             </select>
-            <button id="theme-toggle" class="bg-yellow-500 px-4 py-2 rounded">🌙 Dark Mode</button>
-            <button id="clear-chat" class="bg-red-500 px-4 py-2 rounded">🗑️ Clear Chat</button>
         </div>
+        <i class="fas fa-edit text-xl"></i>
     </div>
 
-    <!-- Chat Window -->
-    <div id="chat-section" class="flex-grow overflow-y-auto p-4 space-y-4">
-        <div id="chat-box"></div>
+    <!-- Main Chat Window -->
+    <div id="chatWindow" class="flex-grow p-4 overflow-y-auto space-y-4">
+        <div class="text-center text-gray-400">What can I help with?</div>
     </div>
 
     <!-- Footer -->
     <div class="p-4 bg-gray-800 flex items-center space-x-2">
-        <button id="write-code-btn" class="bg-green-500 px-4 py-2 rounded">Write Code for Roblox</button>
-        <input id="user-input" type="text" placeholder="Ask anything..." class="flex-grow bg-gray-700 text-white placeholder-gray-400 p-2 rounded focus:outline-none">
-        <i id="send-button" class="fas fa-paper-plane text-2xl cursor-pointer"></i>
+        <i class="fas fa-plus-circle text-2xl"></i>
+        <input id="userInput" type="text" placeholder="Ask anything" class="flex-grow bg-gray-700 text-white placeholder-gray-400 px-3 py-2 rounded focus:outline-none">
+        <i id="sendButton" class="fas fa-paper-plane text-2xl cursor-pointer"></i>
     </div>
 
     <script>
-        const API_KEY = "your_openai_api_key"; // Replace with your OpenAI API Key
-        const API_URL = "https://api.openai.com/v1/chat/completions";
-        const chatBox = document.getElementById('chat-box');
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const writeCodeBtn = document.getElementById('write-code-btn');
-        const modelSelect = document.getElementById('model-select');
-        const themeToggle = document.getElementById('theme-toggle');
-        const clearChatBtn = document.getElementById('clear-chat');
-        const app = document.getElementById('app');
+        const OPENAI_API_KEY = "YOUR_API_KEY_HERE"; // Replace with your OpenAI API key
 
-        // Load chat history from localStorage
-        function loadChatHistory() {
-            const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-            chatHistory.forEach(({ sender, text }) => addMessage(sender, text));
-        }
-
-        // Save chat history to localStorage
-        function saveChatHistory() {
-            const messages = Array.from(chatBox.children).map(msg => ({
-                sender: msg.dataset.sender,
-                text: msg.textContent
-            }));
-            localStorage.setItem('chatHistory', JSON.stringify(messages));
-        }
-
-        // Clear chat history
-        clearChatBtn.addEventListener("click", () => {
-            localStorage.removeItem("chatHistory");
-            chatBox.innerHTML = "";
+        document.getElementById("sendButton").addEventListener("click", sendMessage);
+        document.getElementById("userInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") sendMessage();
         });
 
-        // Function to add messages to chat
-        function addMessage(sender, text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.dataset.sender = sender;
-            messageDiv.classList.add("p-3", "rounded-lg", "max-w-xs", "text-sm");
-            if (sender === "You") {
-                messageDiv.classList.add("bg-blue-500", "self-end");
-            } else {
-                messageDiv.classList.add("bg-gray-700", "self-start");
-            }
-            messageDiv.textContent = text;
-            chatBox.appendChild(messageDiv);
-            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
-            saveChatHistory();
-        }
+        function sendMessage() {
+            const inputField = document.getElementById("userInput");
+            const chatWindow = document.getElementById("chatWindow");
+            const userMessage = inputField.value.trim();
+            const selectedModel = document.getElementById("modelSelect").value;
 
-        // Function to send a message
-        async function sendMessage(message) {
-            if (!message) return;
-            addMessage("You", message);
-            userInput.value = "";
+            if (userMessage === "") return;
 
-            const selectedModel = modelSelect.value; // Get selected model
-            let apiMessage = [{ role: "user", content: message }];
+            // Display user message
+            chatWindow.innerHTML += `<div class="text-right text-blue-400">You: ${userMessage}</div>`;
+            inputField.value = "";
 
-            // If Roblox Studio AI is selected, format the request for scripting help
-            if (selectedModel === "roblox-studio-ai") {
-                apiMessage = [
-                    { role: "system", content: "You are a Roblox Studio AI assistant. Provide Lua scripts and help with game development." },
-                    { role: "user", content: message }
-                ];
-            }
-
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: selectedModel === "roblox-studio-ai" ? "gpt-4" : selectedModel, // Use GPT-4 for Roblox AI
-                    messages: apiMessage
+            // Call OpenAI API
+            fetchAIResponse(userMessage, selectedModel)
+                .then(response => {
+                    chatWindow.innerHTML += `<div class="text-left text-green-400">AI: ${response}</div>`;
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
                 })
-            });
-
-            const data = await response.json();
-            const reply = data.choices[0].message.content;
-            addMessage("ChatGPT (" + selectedModel + ")", reply);
+                .catch(error => {
+                    chatWindow.innerHTML += `<div class="text-left text-red-400">Error: ${error.message}</div>`;
+                });
         }
 
-        sendButton.addEventListener('click', () => sendMessage(userInput.value));
-        userInput.addEventListener('keypress', (event) => {
-            if (event.key === "Enter") sendMessage(userInput.value);
-        });
+        async function fetchAIResponse(message, model) {
+            try {
+                const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${OPENAI_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        messages: [{ role: "system", content: "You are an AI assistant." }, { role: "user", content: message }]
+                    })
+                });
 
-        // "Write Code for Roblox" Button - Generates a Lua script
-        writeCodeBtn.addEventListener('click', () => {
-            sendMessage("Write a Roblox Lua script for me.");
-        });
-
-        // Theme Toggle (Dark/Light Mode)
-        themeToggle.addEventListener("click", () => {
-            const isDarkMode = app.classList.contains("bg-gray-900");
-            if (isDarkMode) {
-                app.classList.replace("bg-gray-900", "bg-white");
-                app.classList.replace("text-white", "text-black");
-                document.querySelectorAll(".bg-gray-800").forEach(el => el.classList.replace("bg-gray-800", "bg-gray-200"));
-                document.querySelectorAll(".bg-gray-700").forEach(el => el.classList.replace("bg-gray-700", "bg-gray-300"));
-                themeToggle.textContent = "🌞 Light Mode";
-                themeToggle.classList.replace("bg-yellow-500", "bg-gray-700");
-                localStorage.setItem("theme", "light");
-            } else {
-                app.classList.replace("bg-white", "bg-gray-900");
-                app.classList.replace("text-black", "text-white");
-                document.querySelectorAll(".bg-gray-200").forEach(el => el.classList.replace("bg-gray-200", "bg-gray-800"));
-                document.querySelectorAll(".bg-gray-300").forEach(el => el.classList.replace("bg-gray-300", "bg-gray-700"));
-                themeToggle.textContent = "🌙 Dark Mode";
-                themeToggle.classList.replace("bg-gray-700", "bg-yellow-500");
-                localStorage.setItem("theme", "dark");
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                return "Failed to connect to AI.";
             }
-        });
-
-        // Load Theme Preference
-        function loadTheme() {
-            const savedTheme = localStorage.getItem("theme");
-            if (savedTheme === "light") themeToggle.click();
         }
-
-        // Load chat history and theme on startup
-        loadChatHistory();
-        loadTheme();
     </script>
+
 </body>
 </html>
