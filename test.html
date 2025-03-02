@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iOS Signing & Jailbreak Tools</title>
+    <title>iOS IPA Installation Methods</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -18,78 +18,66 @@
     <!-- Header -->
     <div class="w-full bg-blue-500 py-10 flex justify-center">
         <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-            <img src="https://storage.googleapis.com/a1aa/image/tQ9N3ZwXhMGZfW91qV54xpBNRpE4QlhE9MMI-9O-TpE.jpg" alt="E.Sign logo" class="mx-auto mb-4" width="100" height="100"/>
-            <h1 class="text-4xl font-bold">iOS Signing & Jailbreak</h1>
-            <p class="text-gray-600 mt-2">A collection of tools for iOS app signing and jailbreaking</p>
+            <img src="https://storage.googleapis.com/a1aa/image/tQ9N3ZwXhMGZfW91qV54xpBNRpE4QlhE9MMI-9O-TpE.jpg" 
+                 alt="E.Sign logo" class="mx-auto mb-4" width="100" height="100"/>
+            <h1 class="text-4xl font-bold">iOS IPA Installation</h1>
+            <p class="text-gray-600 mt-2">Choose a method to install IPA files on your iOS device.</p>
         </div>
     </div>
 
-    <!-- Tools Section -->
-    <div class="mt-10 w-full max-w-5xl px-4">
-        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="py-3 px-4 text-left">Tool</th>
-                    <th class="py-3 px-4 text-left">Features</th>
-                    <th class="py-3 px-4 text-left">Compatibility</th>
-                    <th class="py-3 px-4 text-left">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- ESign -->
-                <tr class="border-t">
-                    <td class="py-3 px-4 font-bold">ESign</td>
-                    <td class="py-3 px-4">IPA signing tool, iOS 12+</td>
-                    <td class="py-3 px-4">All devices</td>
-                    <td class="py-3 px-4 space-x-2">
-                        <a href="https://example.com/ESign.ipa" class="bg-blue-500 text-white text-sm px-4 py-1 rounded">Download IPA</a>
-                        <a href="itms-services://?action=download-manifest&url=https://example.com/ESign.plist" class="bg-green-500 text-white text-sm px-4 py-1 rounded">Direct Install</a>
-                        <a href="https://example.com/cert-status" class="bg-gray-500 text-white text-sm px-4 py-1 rounded">Current Certificate</a>
-                    </td>
-                </tr>
-                
-                <!-- Scarlet -->
-                <tr class="border-t">
-                    <td class="py-3 px-4 font-bold">Scarlet</td>
-                    <td class="py-3 px-4">App sideloading, certificate-free</td>
-                    <td class="py-3 px-4">iOS 13+</td>
-                    <td class="py-3 px-4 space-x-2">
-                        <a href="https://example.com/Scarlet.ipa" class="bg-blue-500 text-white text-sm px-4 py-1 rounded">Download IPA</a>
-                        <a href="itms-services://?action=download-manifest&url=https://example.com/Scarlet.plist" class="bg-green-500 text-white text-sm px-4 py-1 rounded">Direct Install</a>
-                        <a href="https://example.com/cert-status" class="bg-gray-500 text-white text-sm px-4 py-1 rounded">Current Certificate</a>
-                    </td>
-                </tr>
-                
-                <!-- TrollInstallerX -->
-                <tr class="border-t">
-                    <td class="py-3 px-4 font-bold">TrollInstallerX</td>
-                    <td class="py-3 px-4">Jailbreak without PC</td>
-                    <td class="py-3 px-4">iOS 15 - 15.4.1</td>
-                    <td class="py-3 px-4 space-x-2">
-                        <a href="https://example.com/TrollInstallerX.ipa" class="bg-blue-500 text-white text-sm px-4 py-1 rounded">Download IPA</a>
-                        <a href="itms-services://?action=download-manifest&url=https://example.com/TrollInstallerX.plist" class="bg-green-500 text-white text-sm px-4 py-1 rounded">Direct Install</a>
-                        <a href="https://example.com/cert-status" class="bg-gray-500 text-white text-sm px-4 py-1 rounded">Current Certificate</a>
-                    </td>
-                </tr>
+    <!-- Installation Methods -->
+    <div class="mt-10 w-full max-w-4xl px-4 space-y-6">
+        
+        <!-- ESign Method -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-blue-600">ESign (No Jailbreak)</h2>
+            <p class="text-gray-700 mt-2">ESign is a free IPA signature tool that allows users to install IPA files without a PC.</p>
+            <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg">
+                Download ESign IPA
+            </button>
+        </div>
 
-                <!-- AltStore -->
-                <tr class="border-t">
-                    <td class="py-3 px-4 font-bold">AltStore</td>
-                    <td class="py-3 px-4">IPA sideloading with Apple ID</td>
-                    <td class="py-3 px-4">iOS 12+</td>
-                    <td class="py-3 px-4 space-x-2">
-                        <a href="https://example.com/AltStore.ipa" class="bg-blue-500 text-white text-sm px-4 py-1 rounded">Download IPA</a>
-                        <a href="itms-services://?action=download-manifest&url=https://example.com/AltStore.plist" class="bg-green-500 text-white text-sm px-4 py-1 rounded">Direct Install</a>
-                        <a href="https://example.com/cert-status" class="bg-gray-500 text-white text-sm px-4 py-1 rounded">Current Certificate</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- AltStore Method -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-green-600">AltStore (PC Required)</h2>
+            <p class="text-gray-700 mt-2">AltStore lets you install and sign IPA files using a computer and Wi-Fi.</p>
+            <button class="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg">
+                Download AltStore
+            </button>
+        </div>
+
+        <!-- Scarlet Method -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-red-600">Scarlet (No Jailbreak)</h2>
+            <p class="text-gray-700 mt-2">Scarlet is an alternative app store that allows you to install IPA files directly on iOS.</p>
+            <button class="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg">
+                Download Scarlet
+            </button>
+        </div>
+
+        <!-- TrollInstallerX Method -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-purple-600">TrollInstallerX (iOS 15-16)</h2>
+            <p class="text-gray-700 mt-2">TrollInstallerX is a tool that enables app sideloading on iOS 15+ without a computer.</p>
+            <button class="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg">
+                Download TrollInstallerX
+            </button>
+        </div>
+
+        <!-- Jailbreak Method -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800">Jailbreak (Advanced Users)</h2>
+            <p class="text-gray-700 mt-2">Jailbreaking unlocks full system access, allowing you to install apps without restrictions.</p>
+            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded-lg">
+                Learn More About Jailbreaking
+            </button>
+        </div>
+
     </div>
 
     <!-- Footer -->
-    <div class="mt-10 mb-10">
-        <p class="text-center text-gray-600">© 2025 iOS Signing & Jailbreak Tools</p>
+    <div class="mt-10 mb-10 text-gray-600">
+        &copy; 2025 iOS IPA Installation Guide
     </div>
 
 </body>
