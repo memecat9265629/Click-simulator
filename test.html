@@ -10,17 +10,18 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center">
+<body class="flex flex-col items-center text-white">
 
     <!-- Header -->
-    <div class="w-full bg-blue-500 py-10 flex justify-center">
+    <div class="w-full py-10 flex justify-center">
         <div class="bg-white p-6 rounded-lg shadow-lg text-center">
             <img src="https://storage.googleapis.com/a1aa/image/tQ9N3ZwXhMGZfW91qV54xpBNRpE4QlhE9MMI-9O-TpE.jpg" 
                  alt="E.Sign logo" class="mx-auto mb-4" width="100" height="100"/>
-            <h1 class="text-4xl font-bold">iOS IPA Installation</h1>
+            <h1 class="text-4xl font-bold text-gray-900">iOS IPA Installation</h1>
             <p class="text-gray-600 mt-2">Choose a method to install IPA files on your iOS device.</p>
         </div>
     </div>
@@ -29,54 +30,68 @@
     <div class="mt-10 w-full max-w-4xl px-4 space-y-6">
         
         <!-- ESign Method -->
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-6 text-gray-900">
             <h2 class="text-2xl font-bold text-blue-600">ESign (No Jailbreak)</h2>
-            <p class="text-gray-700 mt-2">ESign is a free IPA signature tool that allows users to install IPA files without a PC.</p>
-            <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg">
-                Download ESign IPA
-            </button>
+            <p class="mt-2">ESign is a free IPA signature tool that allows users to install IPA files without a PC.</p>
+            <div class="mt-4 flex space-x-4">
+                <a href="https://example.com/esign.ipa" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Download ESign IPA</a>
+                <a href="itms-services://?action=download-manifest&url=https://example.com/esign.plist" class="bg-green-500 text-white px-4 py-2 rounded-lg">Direct Install</a>
+            </div>
         </div>
 
         <!-- AltStore Method -->
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-6 text-gray-900">
             <h2 class="text-2xl font-bold text-green-600">AltStore (PC Required)</h2>
-            <p class="text-gray-700 mt-2">AltStore lets you install and sign IPA files using a computer and Wi-Fi.</p>
-            <button class="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg">
-                Download AltStore
-            </button>
+            <p class="mt-2">AltStore lets you install and sign IPA files using a computer and Wi-Fi.</p>
+            <a href="https://altstore.io" class="mt-4 inline-block bg-green-500 text-white px-4 py-2 rounded-lg">Download AltStore</a>
         </div>
 
         <!-- Scarlet Method -->
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-6 text-gray-900">
             <h2 class="text-2xl font-bold text-red-600">Scarlet (No Jailbreak)</h2>
-            <p class="text-gray-700 mt-2">Scarlet is an alternative app store that allows you to install IPA files directly on iOS.</p>
-            <button class="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg">
-                Download Scarlet
-            </button>
+            <p class="mt-2">Scarlet is an alternative app store that allows you to install IPA files directly on iOS.</p>
+            <a href="https://scarlet.app" class="mt-4 inline-block bg-red-500 text-white px-4 py-2 rounded-lg">Download Scarlet</a>
         </div>
 
         <!-- TrollInstallerX Method -->
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-6 text-gray-900">
             <h2 class="text-2xl font-bold text-purple-600">TrollInstallerX (iOS 15-16)</h2>
-            <p class="text-gray-700 mt-2">TrollInstallerX is a tool that enables app sideloading on iOS 15+ without a computer.</p>
-            <button class="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg">
-                Download TrollInstallerX
-            </button>
+            <p class="mt-2">TrollInstallerX enables app sideloading on iOS 15+ without a computer.</p>
+            <a href="https://example.com/trollinstallerx.ipa" class="mt-4 inline-block bg-purple-500 text-white px-4 py-2 rounded-lg">Download TrollInstallerX</a>
         </div>
 
         <!-- Jailbreak Method -->
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-6 text-gray-900">
             <h2 class="text-2xl font-bold text-gray-800">Jailbreak (Advanced Users)</h2>
-            <p class="text-gray-700 mt-2">Jailbreaking unlocks full system access, allowing you to install apps without restrictions.</p>
-            <button class="mt-4 bg-gray-700 text-white px-4 py-2 rounded-lg">
-                Learn More About Jailbreaking
-            </button>
+            <p class="mt-2">Jailbreaking unlocks full system access, allowing you to install apps without restrictions.</p>
+            <a href="https://checkra.in" class="mt-4 inline-block bg-gray-700 text-white px-4 py-2 rounded-lg">Learn More About Jailbreaking</a>
+        </div>
+
+        <!-- Certificate Download Section -->
+        <div class="bg-white shadow-md rounded-lg p-6 text-gray-900">
+            <h2 class="text-2xl font-bold text-yellow-600">Certificate for Signing</h2>
+            <p class="mt-2">To install and sign apps, you need a valid certificate. Download and install it below:</p>
+            <a href="https://example.com/certificate.mobileconfig" class="mt-4 inline-block bg-yellow-500 text-white px-4 py-2 rounded-lg">
+                Download Certificate
+            </a>
+            <p class="mt-2 text-gray-600">After downloading, go to **Settings > Profile Downloaded** to install.</p>
+        </div>
+
+        <!-- Installation Guide -->
+        <div class="bg-white shadow-md rounded-lg p-6 text-gray-900">
+            <h2 class="text-2xl font-bold text-blue-500">How to Install & Trust Apps</h2>
+            <ul class="mt-2 list-disc list-inside text-gray-700">
+                <li>Download the IPA file or install directly.</li>
+                <li>Install the certificate and go to **Settings > General > Profiles & Device Management**.</li>
+                <li>Find the certificate, tap **Trust**, and confirm.</li>
+                <li>Now you can open the installed app.</li>
+            </ul>
         </div>
 
     </div>
 
     <!-- Footer -->
-    <div class="mt-10 mb-10 text-gray-600">
+    <div class="mt-10 mb-10 text-white">
         &copy; 2025 iOS IPA Installation Guide
     </div>
 
